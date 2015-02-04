@@ -43,8 +43,6 @@ There is a further step for using serial port on your computer for communicating
 ```$ cd node_modules/serialport```<br/>
 <br/>Build the module using node-pre-gyp, where target is the version of node-webkit you have installed:<br/>
 ```$ node-pre-gyp build --runtime=node-webkit --target=0.10.5```
-<br/>
-Where--target is the version of node-webkit you are using. 
 <br/><br/>
 
 <h3>Go</h3>
