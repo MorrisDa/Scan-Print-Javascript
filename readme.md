@@ -55,5 +55,5 @@ In file config.json you can set some application's settings, like if storing the
 
 <h3>Known Issues and Limitations</h3>
 -On linux, node-pre-gyp need nw-gyp module installed before running<br/>
--On linux, you have to set permission of serial port to 777, otherwise the application will crash reporting and erro 'Cannot Open serialpor'. 
+-On linux, you have to set permission of serial port to 777, otherwise the application will crash reporting an error: 'Cannot Open serialpor'. 
 
