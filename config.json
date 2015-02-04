@@ -3,9 +3,9 @@
   "serialPort": "/dev/cu.usbserial-A602VGLF",
   "readerLess": false,
   "auth": {
-    "username": "dev@unipiazza.it",
-    "password": "caffeina",
-    "unsafe": true
+    "username": "",
+    "password": "",
+    "unsafe": false
   },
   "apis": {
   "placesRetrieve": {
@@ -18,7 +18,7 @@
     "method": "post",
     "headers": [
       {"Accept":"application/unipiazza.v4"},
-      {"Authorization": "Bearer"}
+      {"Authorization": "Bearer"} 
       ]
   },
   "login": {

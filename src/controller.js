@@ -64,7 +64,7 @@ myApp.service('sortPlaces', function() {
 
 }).service('tokenRefresher', ['$http', 'jwtHelper', 'settings',
 function($http, jwtHelper, settings) {
-	//check if the token should be refreshed. 
+	//check if the token should be refreshed.
 	function c() {
 		this.valid = function(tok) {
 			if (jwtHelper.isTokenExpired(tok))
@@ -72,7 +72,6 @@ function($http, jwtHelper, settings) {
 			else
 				return true;
 		}
-
 	}
 
 	return new c();
@@ -169,8 +168,8 @@ function($http, settings, tokenRefresher, $headerCompiler) {
 								cll(false, {
 									msg : "connection estabilished"
 								});
-								
-								//object for making a serious hack. The board send us the data in two different packages, so we have to compose them safely. 
+
+								//object for making a serious hack. The board send us the data in two different packages, so we have to compose them safely.
 								var UID = {
 									opened : false,
 									string : "",
@@ -207,8 +206,8 @@ function($http, settings, tokenRefresher, $headerCompiler) {
 											self.SendData(UID.string);
 											UID.reset();
 										}
-									}
-									else if (data.indexOf('z') !== -1 && data.indexOf('w') !== -1 && data.length == 16) self.SendData(data.replace("w", "").replace("z", ""));
+									} else if (data.indexOf('z') !== -1 && data.indexOf('w') !== -1 && data.length == 16)
+										self.SendData(data.replace("w", "").replace("z", ""));
 									//we absume there are not blank data between data with 'w' and data with 'z'. So we simply clear and close;
 									else
 										UID.reset();
@@ -231,7 +230,7 @@ function($http, settings, tokenRefresher, $headerCompiler) {
 						cll({
 							code : 2,
 							msg : "failing to list serial ports on your device. check nodeserial is properly installed",
-							data : [ ]
+							data : []
 						}, null);
 					//$('.serialPlug').css("display", "block");
 				}
@@ -292,20 +291,22 @@ function($scope, settings, Connect, $http, Poster, prettyData) {
 					App.unError(15);
 					App.unError(17);
 					App.error(15, prettyData.pretty(res.pass));
-					if ($scope.print) App.print(res.pass.activation_code);
+					if ($scope.print)
+						App.print(res.pass.activation_code);
 				} else
 					switch(err.status) {
 						case 400:
 							App.error(14, err.msg);
 							break;
 						case 401:
-							App.error(17); App.login();
-							break;	
+							App.error(17);
+							App.login();
+							break;
 						default:
 							App.error(13, "<br/>status: " + err.status + "<br/>message: " + err.status + "<br/>");
 							break;
 					}
-			});	
+			});
 		} else {
 			App.error(10);
 		}
@@ -333,13 +334,14 @@ function($scope, settings, Connect, $http, Poster, prettyData) {
 					App.error(2);
 				});
 			} else {
-				switch(err.code)
-				case 1 :
-				App.error(1, settings.serialPort + ". <br/>available serial ports are: " + prettyData.prettyPort(err.data));
-				break;
-				case 2 : 
-				App.error(1, settings.serialPort + ". <br/>" + err.msg);
-				break;
+				switch(err.code) {
+					case 1 :
+						App.error(1, settings.serialPort + ". <br/>available serial ports are: " + prettyData.prettyPort(err.data));
+						break;
+					case 2 :
+						App.error(1, settings.serialPort + ". <br/>" + err.msg);
+						break;
+				}
 			}
 		})
 	}
@@ -359,6 +361,8 @@ function($scope, settings, sortPlaces, $http, $headerCompiler) {
 		return 'animated' + ' ' + an[Math.floor(Math.random() * an.length)];
 	})();
 	$('#main').addClass(animation);
+	
+	$('body').addClass("backFigo");
 	//array of arrays of three places objects
 	$scope.places = [];
 	//array of places objects

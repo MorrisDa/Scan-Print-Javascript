@@ -1,0 +1,88 @@
+.topbar {
+
+	height: 90px;
+	line-height: 90px;
+	background: #f58220;
+	width: 100%;
+	text-align:center;
+	font-size: 2.5em;
+	
+}
+
+
+
+
+body, html { 
+	background: #F58220;
+	
+	
+    overflow-x: hidden; 
+    overflow-y: auto;
+}
+
+.backFigo {
+	background-image: url('images/a.png');
+	
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+
+.wait {
+
+	display:none;
+}
+
+.bad {
+
+	display:none;
+}
+
+.compile {
+	display:none;
+	margin-top: -0.25em;
+}
+
+.container {
+	width: 960px;
+	margin-top: 2em;
+	background:rgba(255,255,255,0.95); 
+	border: 16px solid #2e2e2e; 
+	padding: 15px; border-radius: 6px;
+	-moz-box-shadow: 0px 0px 5px #000000;
+-webkit-box-shadow: 0px 0px 5px #000000;
+box-shadow: 0px 0px 5px #000000;
+}
+
+.login div {
+	margin-top: 2em;
+	display:none;
+}
+
+.login input {
+	margin-bottom: 0.5em;
+}
+
+.login h2 {
+	color:black;
+}
+
+
+.hidden {
+	display:none;
+}
+
+
+.left_sidebar input {
+	margin-bottom: 0.5em;
+}
+
+.left_sidebar a {
+	margin-top: 1.5em;
+}
