@@ -17,7 +17,7 @@ With these control-characters you can send fragmented packets because of baudRat
 This application is built using standard web technologies: HTML5, CSS3, Javascript. It uses some native and third party nodejs modules for accessing serial ports. 
 It is run by node-webkit and it should be compatible with any node-webkit supported OS (Mac, Windows, Linux). 
 
-Please note this application has been tested only on Mac Os 10.9.4.
+Please note this application has been tested on Mac Os 10.9.4 only.
 
 <h3>Software requirements</h3>
 - node-webkit (https://github.com/nwjs) 
