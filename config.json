@@ -1,0 +1,31 @@
+{
+
+  "serialPort": "/dev/cu.usbserial-A602VGLF",
+  "readerLess": false,
+  "auth": {
+    "username": "dev@unipiazza.it",
+    "password": "caffeina",
+    "unsafe": true
+  },
+  "apis": {
+  "placesRetrieve": {
+    "url": "http://www.unipiazza.it/api/shops/all",
+    "method": "get",
+    "headers": [{"Accept":"application/unipiazza.v4"}]
+  },
+  "passRetails": {
+    "url": "http://www.unipiazza.it/api/pass_retails",
+    "method": "post",
+    "headers": [
+      {"Accept":"application/unipiazza.v4"},
+      {"Authorization": "Bearer"}
+      ]
+  },
+  "login": {
+    "data": [{"scope": "admin"}],
+    "url": "http://www.unipiazza.it/auth/sign_in",
+    "method": "post",
+    "headers": []
+  }
+}
+}

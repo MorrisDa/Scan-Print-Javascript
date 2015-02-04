@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+	<head>
+		<title>UniPiazza Card Reader</title>
+		<link rel="stylesheet" href="UI/css/bootstrap.min.css">
+		<link href="UI/css/flat-ui.css" rel="stylesheet">
+		<link href="UI/css/demo.css" rel="stylesheet">
+		<link href="UI/css/animate.css" rel="stylesheet">
+		<script src="UI/js/jquery-1.11.2.min.js"></script>
+		<script src="UI/js/angular.min.js"></script>
+		<script src="UI/js/angular-jwt.js"></script>
+		<script src="printer/javascript/plugin.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="src/index.js"></script>
+		<script src="src/controller.js"></script>
+		
+		
+		<script>
+			
+		</script>
+		
+		
+		<!-- 
+			menu for MAC OS only
+		<script>
+		
+			var gui = require('nw.gui');
+			var mb = new gui.Menu({
+				type : "menubar"
+			});
+			mb.createMacBuiltin("UniPiazza Reader");
+			gui.Window.get().menu = mb;
+		</script>
+		-->	
+
+	</head>
+
+	<body>
+
+		<div class="row vertical-center" id="login" ng-if="initialLoad">
+
+			<div class="col-md-3 col-md-offset-3">
+
+				<img src="UI/img/unipiazza.png" />
+				<br/>
+				<h5>An NFC reader 4 Unipiazza</h5>
+			</div>
+
+			<div class="col-md-3">
+				<div class="login-form" style="width: 100%;">
+
+					<div id="loginError" class="alert" role="alert" style="display:none">
+						Please wait server response..
+					</div>
+
+					<div class="form-group">
+						<input type="text" class="form-control login-field" value="" placeholder="Enter admin mail" id="login-name" />
+						<label class="login-field-icon fui-mail" for="login-name"></label>
+					</div>
+
+					<div class="form-group">
+						<input type="password" class="form-control login-field" value="" placeholder="Password" id="login-pass" />
+						<label class="login-field-icon fui-lock" for="login-pass"></label>
+					</div>
+
+					<a class="btn btn-primary btn-lg btn-block" onclick="App.loginAndInit()" href="#">Log in</a>
+					<a class="login-link" href="#" onclick="alert('ahah cazzi tuoi \nahah cazzi tuoi \nahah cazzi tuoi \nahah cazzi tuoi \nahah cazzi tuoi \nahah cazzi tuoi \n')">Non sai la password? Cazzi tuoi!</a>
+
+				</div>
+			</div>
+
+		</div>
+
+		<div id="main" class="vertical-center" ng-controller="global" ng-cloak>
+
+			<div id="workPanel" class="container" style="background:rgba(255,255,255,0.9); border: 1px solid #2e2e2e; padding: 15px; border-radius: 6px;">
+
+				<div class="col-xs-6">
+
+					<div class="left_sidebar">
+
+						<div id="connectionAlert" class="alert" role="alert" style="display:none;"></div>
+						<div id="tokenError" class="alert" role="alert" style="display:none;"></div>
+					
+						<div id="connectButton" class="alert alert-info" role="alert" style="display:none;">
+							<span class="fui-power" aria-hidden="true"></span>
+							<a ng-click='connect()' style='cursor:pointer; text-decoration:underline;'>Try connecting</a>
+						</div>
+
+						<div id="reLogin" class="alert alert-warning" role="alert" style="">
+							<div class="login-form" style="width: 100%;">
+							<div class="form-group">
+								<input type="password" class="form-control login-field" value="" placeholder="Password" id="login-pass" />
+								<label class="login-field-icon fui-lock" for="login-pass"></label>
+							</div>
+							</div>
+
+							<a class="btn btn-primary btn-lg btn-block" onclick="App.login(null, $(this.parentNode).find('input').val())" href="#">Authenticate</a>
+						</div>
+
+						Card UID:
+						<input type="text" value="{{UID}}" id="UID" disabled="disabled" class="form-control disabled" style="color:black"/>
+						Place_Name:
+						<input type="text" value="{{placeName}}" disabled="disabled" class="form-control disabled" style="color:black"/>
+						Place_Id:
+						<input type="text" value="{{placeId}}" disabled="disabled" class="form-control disabled" style="color:black"/>
+
+						<div class="col-xs-12">
+							<label class="radio col-xs-3" style="display:inline;">
+								<input type="radio" ng-model="type" name="optionsRadios" id="optionsRadios1" value="card" data-toggle="radio">
+								Carta </label>
+							<label class="radio col-xs-6" style="display:inline;">
+								<input type="radio" ng-model="type" name="optionsRadios" id="optionsRadios2" value="keychain" data-toggle="radio" checked="">
+								Portachiavi </label>
+							<label class="radio col-xs-3" style="display:inline;">
+								<input type="radio" ng-model="type" name="optionsRadios" id="optionsRadios2" value="altro" data-toggle="radio" checked="">
+								Altro </label>
+						</div>
+
+						<div class="col-xs-12">
+
+							<label class="checkbox" for="checkbox1">
+								<input type="checkbox" ng-model="print" value="" id="checkbox1" data-toggle="checkbox">
+								Print on Fly </label>
+
+							<label class="checkbox" for="checkbox2">
+								<input type="checkbox" ng-model="save" value="" id="checkbox2" data-toggle="checkbox">
+								Save as Persistent Data </label>
+						</div>
+
+						<!--<a href="#fakelink" class="btn btn-block btn-lg btn-primary">Send</a>-->
+						<div class="col-xs-12">
+							<div id="inputError" class="alert alert-danger" role="alert" style="display:none;"></div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-xs-6" ng-controller="places" id="searchPlace">
+					Choose a Place:
+					<div class="todo">
+						<div class="todo-search">
+							<input class="todo-search-field" type="search" placeholder="Seatch" placeholder="Search" ng-change="reSort()" ng-model="search"/>
+						</div>
+						<div id="placeError" class="alert" role="alert" style="display:none"></div>
+						<div id="placeButton" class="alert alert-info" role="alert" style="display:none;">
+							<span class="fui-window" aria-hidden="true"></span>
+							<a ng-click='loadPlaces()' style='cursor:pointer; text-decoration:underline;'>Try again</a>
+						</div>
+						<ul>
+
+							<div class="fragment frag-{{$index}} {{display($index)}}" ng-repeat="i in places">
+								<li ng-repeat="u in i" ng-click="bindInputData(u.id, u.name)">
+									<div class="todo-icon fui-list"></div>
+									<div class="todo-content">
+										<h4 class="todo-name name"> {{u.name}} </h4>
+										<span class="id">{{u.id}}</span>
+									</div>
+								</li>
+
+							</div>
+
+						</ul>
+
+					</div><!-- /.todo -->
+
+					<div class="pagination">
+						<ul>
+							<li class="{{active($index)}} variable" ng-repeat="b in places">
+								<a ng-click="togglePage($index, this)" value="{{$index}}" href="#">{{$index}}</a>
+							</li>
+						</ul>
+					</div>
+					<!-- /pagination -->
+
+				</div>
+
+			</div>
+
+			<!-- Bootstrap -->
+
+			<script src="UI/js/elements.js"></script>
+			<script src="UI/js/bootstrap.min.js"></script>
+			<script src="UI/js/flat-ui.js"></script>
+		</div>
+	</body>
+</html>
