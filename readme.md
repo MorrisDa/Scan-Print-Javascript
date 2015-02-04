@@ -54,6 +54,6 @@ You are ready to go, cd with terminal into the root folder of the project (where
 In file config.json you can set some application's settings, like if storing the password locally for token refresh, the API endpoints for authentication and communication with server and the serial port the application will try to connect to.
 
 <h3>Known Issues and Limitations</h3>
--On linux, node-pre-gyp need nw-gyp module installed before running
+-On linux, node-pre-gyp need nw-gyp module installed before running<br/>
 -On linux, you have to set permission of serial port to 777, otherwise the application will crash reporting and erro 'Cannot Open serialpor'. 
 
