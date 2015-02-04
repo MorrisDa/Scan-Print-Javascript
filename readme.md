@@ -2,8 +2,8 @@
 This application is used at unipiazza for scanning NFC devices, send the tag to the server, and print the server generated token on a label. 
 
 <h3>Hardware requirements</h3>
-- an Arduino Board (http://arduino.cc/); (or any other PIC)
-- an RFID-MFRC522 module for Arduino (http://playground.arduino.cc/Learning/MFRC522, (or any other nfc reader) http://www.nxp.com/documents/data_sheet/MFRC522.pdf);
+- an Arduino Board (http://arduino.cc/); (or any PIC)
+- an RFID-MFRC522 module for Arduino (http://playground.arduino.cc/Learning/MFRC522, (or any nfc reader compatible with your pic) http://www.nxp.com/documents/data_sheet/MFRC522.pdf);
 - a Dymo printer;
 
 
@@ -31,12 +31,14 @@ Check https://github.com/nwjs/nw.js/tree/master#downloads to choose the version 
 <br/><br/>
 - Dyno Label v.8 or later. (http://www.dymo.com/en-US/dymo-user-guides) <br/>this is need just for printing
 There's a fast installer for windows and Mac.
+<br/><br/>
+- If something doesn't work as expected when you run the application, Ensure to have all requirements listed here: https://github.com/voodootikigod/node-serialport#installation-special-cases
 
 <h3>Installation</h3>
 If you have node-webkit installed, you are almost near to go.
 There is a further step for using serial port on your computer for communicating with the PIC: this application includes a C++ addon for nodejs that should be built depending on the OS and depending on your node-webkit version. <br/>This can be done using a third party module like https://github.com/mapbox/node-pre-gyp
 <br/><br/>Install node-pre-gyp:<br/>
-```npm install -g node-pre-gyp``` <br/>
+```$ npm install -g node-pre-gyp``` <br/>
 <br/>From the project route, change directory into the module that should be built:<br/>
 ```$ cd node_modules/serialport```<br/>
 <br/>Build the module using node-pre-gyp, where target is the version of node-webkit you have installed:<br/>
@@ -48,8 +50,12 @@ Where--target is the version of node-webkit you are using.
 <h3>Go</h3>
 You are ready to go, cd with terminal into the root folder of the project (where ```package.json``` is) and simply do: 
 <br/><br/>
-```nodewebkit``` <br/><br/>
+```$ nodewebkit``` <br/><br/>
 
 <h3>Configuration</h3>
-In file config.json you can set some application's settings. 
+In file config.json you can set some application's settings, like if storing the password locally for token refresh, the API endpoints for authentication and communication with server and the serial port the application will try to connect to.
+
+<h3>Known Issues and Limitations</h3>
+-On linux, node-pre-gyp need nw-gyp module installed before running
+-On linux, you have to set permission of serial port to 777, otherwise the application will crash reporting and erro 'Cannot Open serialpor'. 
 
