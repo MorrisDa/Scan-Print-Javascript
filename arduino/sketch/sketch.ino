@@ -70,4 +70,5 @@ void dump_byte_array(byte *buffer, byte bufferSize) {
         Serial.print(buffer[i], HEX);
     }
    Serial.print("z");
+   Serial.println();
 }

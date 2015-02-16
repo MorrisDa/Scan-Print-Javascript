@@ -124,6 +124,52 @@ function($http, settings, tokenRefresher, $headerCompiler) {
 
 	return new c();
 
+}]).service('Deleter', ['$http', 'settings', 'tokenRefresher', '$headerCompiler',
+function($http, settings, tokenRefresher, $headerCompiler) {
+
+	function c() {
+		//first token on construct:
+		this.token = settings.auth.token;
+		var self = this;
+
+		this.deleteCard = function(data, cll) {
+			if (tokenRefresher.valid(self.token)) {
+				App.error(12);
+				$http({
+					method : settings.apis.deleteCard.method.toUpperCase(),
+					data : {q: data},
+					url : settings.apis.deleteCard.url,
+					headers : (function() {
+						var b = $headerCompiler.toHeaderObject(settings.apis.deleteCard.headers);
+						//append token to header
+						b['Authorization'] = b['Authorization'] + ' ' + self.token;
+						return b;
+					})()
+				}).success(function(data, status, headers, config) {
+					// this callback will be called asynchronously
+					// when the response is available
+					cll(false, data);
+
+				}).error(function(data, status, headers, config) {
+					// called asynchronously if an error occurs
+					cll({
+						status : status,
+						code : 57,
+						msg : data.errors[0]
+					}, null)
+					// or server returns response with an error status.
+				});
+			} else {
+				App.error(17);
+				//if token is expired, we ask for the password again; username should be stored in App.settings.auth.username. Card should be scan again (we don't store it)
+				App.login();
+			}
+
+		}
+	}
+
+	return new c();
+
 }]).service('Connect', function() {
 
 	function c() {
@@ -201,7 +247,9 @@ function($http, settings, tokenRefresher, $headerCompiler) {
 									//check if it is a end string ()
 									else if (data.indexOf('z') !== -1 && UID.opened) {
 										UID.append(data.replace("z", ""));
-										//check if it is a valid UID NFC string, sebd data and reset UID object;
+										//check if it is a valid UID NFC string, sebd data and reset UID object; 
+										UID.string = UID.string.trim();
+										UID.string = UID.string.trim();
 										if (UID.string.length == 14) {
 											self.SendData(UID.string);
 											UID.reset();
@@ -264,19 +312,39 @@ function($http, settings, tokenRefresher, $headerCompiler) {
  * APPLICATION CONTROLLERS
  */
 
-myApp.controller('global', ['$scope', 'settings', 'Connect', '$http', 'Poster', 'prettyData',
-function($scope, settings, Connect, $http, Poster, prettyData) {
+myApp.controller('global', ['$scope', 'settings', 'Connect', '$http', 'Poster', 'prettyData', 'Deleter',
+function($scope, settings, Connect, $http, Poster, prettyData, Deleter) {
 
 	$scope.placeId = '';
 	$scope.placeName = '';
 	$scope.UID = '';
 	$scope.type = 'card';
 	$scope.print = false;
+	$scope.read = false;
+	$scope.delete = false;
 	$scope.save = false;
-
+	$scope.history = [];
 	//send data to server
+
+	$scope.printAgain = function(i) {
+		console.log(i)
+		App.print(i)
+	}
+
 	$scope.sendData = function() {
-		if ($scope.UID && $scope.type && $scope.placeId) {
+		if ($scope.read) {
+			App.unError(12);
+		}
+		else if ($scope.delete) {
+			Deleter.deleteCard($scope.UID, function(err,res) {
+				if (!err && res && !res.error) {
+					App.error(32);
+				}
+				else App.error(33);
+
+			});
+		}
+		else if ($scope.UID && $scope.type && $scope.placeId) {
 			App.unError(12);
 
 			var data = {
@@ -290,6 +358,8 @@ function($scope, settings, Connect, $http, Poster, prettyData) {
 				if (!err && res) {
 					App.unError(15);
 					App.unError(17);
+					$scope.history.unshift({uid: $scope.UID, pass: res.pass.activation_code});
+					if ($scope.history.length > 3) $scope.history.pop();
 					App.error(15, prettyData.pretty(res.pass));
 					if ($scope.print)
 						App.print(res.pass.activation_code);

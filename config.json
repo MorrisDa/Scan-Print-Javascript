@@ -3,29 +3,37 @@
   "serialPort": "/dev/cu.usbserial-A602VGLF",
   "readerLess": false,
   "auth": {
-    "username": "",
-    "password": "",
-    "unsafe": false
+    "username": "dev@unipiazza.it",
+    "password": "caffeina",
+    "unsafe": true
   },
   "apis": {
-  "placesRetrieve": {
-    "url": "http://www.unipiazza.it/api/shops/all",
-    "method": "get",
-    "headers": [{"Accept":"application/unipiazza.v4"}]
-  },
-  "passRetails": {
-    "url": "http://www.unipiazza.it/api/pass_retails",
-    "method": "post",
-    "headers": [
-      {"Accept":"application/unipiazza.v4"},
-      {"Authorization": "Bearer"} 
-      ]
-  },
-  "login": {
-    "data": [{"scope": "admin"}],
-    "url": "http://www.unipiazza.it/auth/sign_in",
-    "method": "post",
-    "headers": []
+    "placesRetrieve": {
+      "url": "http://www.unipiazza.it/api/shops/all",
+      "method": "get",
+      "headers": [{"Accept":"application/unipiazza.v4"}]
+    },
+    "deleteCard": {
+      "url": "http://www.unipiazza.it/api/pass_retails/destroy",
+      "method": "delete",
+      "headers": [
+        {"Accept":"application/unipiazza.v4"},
+        {"Authorization": "Bearer"} 
+        ]
+    },
+    "passRetails": {
+      "url": "http://www.unipiazza.it/api/pass_retails",
+      "method": "post",
+      "headers": [
+        {"Accept":"application/unipiazza.v4"},
+        {"Authorization": "Bearer"} 
+        ]
+    },
+    "login": {
+      "data": [{"scope": "admin"}],
+      "url": "http://www.unipiazza.it/auth/sign_in",
+      "method": "post",
+      "headers": []
+    }
   }
-}
 }

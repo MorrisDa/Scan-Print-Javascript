@@ -122,6 +122,14 @@
 								<input type="checkbox" ng-model="print" value="" id="checkbox1" data-toggle="checkbox">
 								Print on Fly </label>
 
+							<label class="checkbox" for="checkbox2">
+								<input type="checkbox" ng-model="delete" value="" id="checkbox2" data-toggle="checkbox">
+								Send delete request to Server </label>
+
+							<label class="checkbox" for="checkbox3">
+								<input type="checkbox" ng-model="read" value="" id="checkbox3" data-toggle="checkbox">
+								Read Card Only </label>		
+
 							<!-- implement feature
 							<label class="checkbox" for="checkbox2">
 								<input type="checkbox" ng-model="save" value="" id="checkbox2" data-toggle="checkbox">
@@ -132,6 +140,14 @@
 						<div class="col-xs-12">
 							<div id="inputError" class="alert alert-danger" role="alert" style="display:none;"></div>
 						</div>
+
+						<div class="col-xs-12">
+							<div ng-repeat="i in history" style="border: 2px solid #ddd; margin-top: 5px; border-radius: 4px; padding: 5px;">
+								UID: {{i.uid}}, <br/>
+								pass: {{i.pass}}  <br/>
+								<a ng-click="printAgain(i.pass)" style="cursor:pointer">Print</a>
+							</div>	
+						</div>	
 
 					</div>
 

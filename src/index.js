@@ -167,6 +167,16 @@ function Application() {
 			message : "<span class='fui-upload'></span>  Please wait, we are talking to the server",
 			kind : "warning"
 		},
+		33 : {
+			location_id : this.errorsLocation[4],
+			message : "<span class='fui-danger'></span>  Error in deleting this card from server",
+			kind : "danger"
+		},
+		32 : {
+			location_id : this.errorsLocation[4],
+			message : "The card was successfully deleted from server",
+			kind : "success"
+		},
 		17 : {
 			location_id : this.errorsLocation[4],
 			message : "<span class='fui-cross'></span> Your communication token is invalid, try again",
@@ -210,7 +220,7 @@ function Application() {
 }
 
 Application.prototype.print = function(code) {
-
+	console.log('printing :', code)
 	try {
 	var lab = this.fs.readFileSync("printer/_Template/label.label").toString();
 	var a = lab.replace(/<String>(.+?)<\/String>/g, "<String>" + code + "</String>");
