@@ -227,7 +227,6 @@ Application.prototype.print = function(code) {
 	var label = dymo.label.framework.openLabelXml(a);
 	var printers = dymo.label.framework.getPrinters();
 
-	console.log(printers)
 
 	if (printers.length == 0)
 		App.error(31);

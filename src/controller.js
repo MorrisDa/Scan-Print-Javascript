@@ -134,10 +134,10 @@ function($http, settings, tokenRefresher, $headerCompiler) {
 
 		this.deleteCard = function(data, cll) {
 			if (tokenRefresher.valid(self.token)) {
-				App.error(12);
+				App.unError(12);
 				$http({
 					method : settings.apis.deleteCard.method.toUpperCase(),
-					data : {q: data},
+					params : {q: data},
 					url : settings.apis.deleteCard.url,
 					headers : (function() {
 						var b = $headerCompiler.toHeaderObject(settings.apis.deleteCard.headers);
@@ -336,7 +336,9 @@ function($scope, settings, Connect, $http, Poster, prettyData, Deleter) {
 			App.unError(12);
 		}
 		else if ($scope.delete) {
+			App.unError(32);
 			Deleter.deleteCard($scope.UID, function(err,res) {
+				console.log(err,res)
 				if (!err && res && !res.error) {
 					App.error(32);
 				}
